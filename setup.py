@@ -21,7 +21,7 @@ setup(name="livestreamermanager",
       packages=["livestreamermanager"],
       package_dir={'': 'src'},
       entry_points={
-          "console_scripts": ['lsm=livestreamermanager.cli:main']
+          "console_scripts": ['lsmgr=livestreamermanager.cli:main']
       },
       install_requires=deps,
       classifiers=["Operating System :: POSIX",
