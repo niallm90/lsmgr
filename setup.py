@@ -11,17 +11,17 @@ if (version_info[0] == 2 and version_info[1] < 7) or \
    (version_info[0] == 3 and version_info[1] < 2):
     deps.append("argparse")
 
-setup(name="livestreamermanager",
+setup(name="lsmgr",
       version=version,
       description="A manager for the livestreamer program",
-      url="https://github.com/niallm90/livestreamermanager",
+      url="https://github.com/niallm90/livestreamer-manager",
       author="Niall McAndrew",
       author_email="niallm90@gmail.com",
       license="BSD",
-      packages=["livestreamermanager"],
+      packages=["lsmgr"],
       package_dir={'': 'src'},
       entry_points={
-          "console_scripts": ['lsmgr=livestreamermanager.cli:main']
+          "console_scripts": ['lsmgr=lsmgr.cli:main']
       },
       install_requires=deps,
       classifiers=["Operating System :: POSIX",

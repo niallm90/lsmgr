@@ -10,13 +10,13 @@ import prettytable
 #logger = livestreamermanager.logger.new_module("manager")
 
 class Manager(cmd.Cmd):
-    prompt = "lsm$ "
+    prompt = "lsmgr$ "
     streamPool = dict()
     streamIndex = 0
-    def __init__(self, lsm, args):
+    def __init__(self, lsmgr, args):
         cmd.Cmd.__init__(self)
         self.args = args
-        self.lsm = lsm
+        self.lsmgr = lsmgr
         try:
             self.cmdloop()
         except KeyboardInterrupt:
@@ -190,8 +190,12 @@ Stream now playbacks in player (default is VLC).
         args.errorlog = self.args.errorlog
         args.rtmpdump = self.args.rtmpdump
         args.xsplit = self.args.xsplit
+        args.jtv_cookie = self.args.jtv_cookie
+        args.gomtv_cookie = self.args.gomtv_cookie
+        args.gomtv_username = self.args.gomtv_username
+        args.gomtv_password = self.args.gomtv_password
     
-        stream = StreamThread(self.get_stream_id(), self.lsm, args)
+        stream = StreamThread(self.get_stream_id(), self.lsmgr, args)
         self.streamPool[stream.id] = stream
 
     def do_jtvauth(self, args):
@@ -204,7 +208,7 @@ Stream now playbacks in player (default is VLC).
             return False
 
         if auth.cookie:
-            self.lsm.livestreamer.set_plugin_option("justintv", "cookie", args.cookie)
+            self.args.jtv_cookie = args.cookie
 
     def do_gomtvauth(self, args):
         "Specify GOMTV authentication with the cookie or username and password to allow access to streams"
@@ -219,10 +223,10 @@ Stream now playbacks in player (default is VLC).
             return False
 
         if args.cookie:
-            self.lsm.livestreamer.set_plugin_option("gomtv", "cookie", args.cookie)
+            self.args.gomtv_cookie = args.cookie
 
         if args.username:
-            self.lsm.livestreamer.set_plugin_option("gomtv", "username", args.username)
+            self.args.gomtv_username = args.username
 
         if args.password:
             if args.password is True:
@@ -230,7 +234,7 @@ Stream now playbacks in player (default is VLC).
             else:
                 password = args.password
             
-            self.lsm.livestreamer.set_plugin_option("gomtv", "password", password)
+            self.args.gomtv_password = password
 
     def do_player(self, args):
         "Command-line for player"

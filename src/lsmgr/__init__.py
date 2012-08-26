@@ -6,16 +6,15 @@ from livestreamer import Livestreamer
 import pkgutil
 import imp
 
-class Livestreamermanager(object):
+class Lsmgr(object):
     """
-A Livestreamermanager session is used to keep track of 
+A Lsmgr session is used to keep track of 
 options and log settings.
 
 """
 
     def __init__(self):
         self.logger = Logger()
-        self.livestreamer = Livestreamer()
 
     def set_loglevel(self, level):
         """
@@ -31,4 +30,4 @@ object with a write method.
 """
         self.logger.set_output(output)
 
-__all__ = ["Livestreamermanager"]
+__all__ = ["Lsmgr"]

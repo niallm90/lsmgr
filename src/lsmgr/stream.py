@@ -103,11 +103,20 @@ class HTTPStream(Stream):
 
 
 class StreamHandler():
-    def __init__(self, lsm, args, queue=None):
+    def __init__(self, lsmgr, args, queue):
         try:
-            self.lsm = lsm
-            self.livestreamer = lsm.livestreamer
-            self.logger = lsm.logger.new_module("stream")
+            self.lsmgr = lsmgr
+            self.livestreamer = livestreamer.Livestreamer()
+
+            self.livestreamer.set_option("errorlog", args.errorlog)
+            self.livestreamer.set_option("rtmpdump", args.rtmpdump)
+            self.livestreamer.set_plugin_option("justintv", "cookie", args.jtv_cookie)
+            self.livestreamer.set_plugin_option("gomtv", "cookie", args.gomtv_cookie)
+            self.livestreamer.set_plugin_option("gomtv", "username", args.gomtv_username)
+            self.livestreamer.set_plugin_option("gomtv", "password", args.gomtv_password)
+
+            lsmgr.logger.set_output(sys.stdout)
+            self.logger = lsmgr.logger.new_module("stream")
             self.args = args
             self.queue = queue
             
@@ -325,13 +334,13 @@ class StreamHandler():
 
 
 class StreamThread():
-    def __init__(self, id, lsm, args):
+    def __init__(self, id, lsmgr, args):
         self.id = id
         self.args = args
-        self.lsm = lsm
+        self.lsmgr = lsmgr
         self.queue = multiprocessing.Queue()
 
-        self.process = multiprocessing.Process(target=StreamHandler, args=(self.lsm, self.args, self.queue))
+        self.process = multiprocessing.Process(target=StreamHandler, args=(self.lsmgr, self.args, self.queue))
         self.process.start()
 
         # Loop until we get a response as it will be pushing stuff 
