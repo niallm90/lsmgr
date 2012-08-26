@@ -36,7 +36,7 @@ setup(name="livestreamermanager",
 
 # Fix the entry point so that we don't end up in an infinite loop because of multiprocess
 if platform == 'win32':
-    f = open(prefix + "\\Scripts\\lsm-script.py", "r+")
+    f = open(prefix + "\\Scripts\\lsmgr-script.py", "r+")
     
     contents = f.readlines()
 
