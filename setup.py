@@ -31,7 +31,6 @@ setup(name="lsmgr",
                    "Topic :: Internet :: WWW/HTTP",
                    "Topic :: Multimedia :: Sound/Audio",
                    "Topic :: Utilities"],
-      dependency_links = ['https://github.com/chrippa/livestreamer/tarball/master#egg=livestreamer-1.2.0']
 )
 
 # Fix the entry point so that we don't end up in an infinite loop because of multiprocess
