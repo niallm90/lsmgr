@@ -24,6 +24,11 @@ except ImportError:
 	import urllib2 as urllib
 
 try:
+    import sh as pbs
+except ImportError:
+    import pbs
+
+try:
     from urllib.parse import urlparse, parse_qs, urlencode
 except ImportError:
     from urlparse import urlparse, parse_qs

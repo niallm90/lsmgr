@@ -248,7 +248,7 @@ Stream now playbacks in player (default is VLC).
         if not args.command:
             print "player requires one argument: player [command]"
         else:
-            self.args.player = args.player
+            self.args.player = args.command
 
     def do_ports(self, args):
         "Specify ports to start streams on if streaming."

@@ -1,9 +1,8 @@
 from .utils import urlopen, check_port
-from .compat import str, is_win32
+from .compat import str, is_win32, pbs
 import livestreamer
 
 import os
-import pbs
 import time
 import tempfile
 import multiprocessing
@@ -169,7 +168,8 @@ class StreamHandler():
                         else:
                             exit("Stream does not use a command-line")
                     else:
-                        self.output_stream(stream)
+                        while self.queueGet(False, 0) == "kill":
+                            self.output_stream(stream)
                 else:
                     self.logger.error(("Invalid stream quality: {0}").format(args.stream))
                     self.logger.error(("Valid streams: {0}").format(validstreams))
@@ -258,11 +258,12 @@ class StreamHandler():
 
     def write_stream(self, fd, out, progress):
         written = 0
+        kill = False
 
         while True:
             try:
-                #This may be causing come lag as it could still be blocking for a short amount of time.
                 if self.queueGet(False, 0) == "kill":
+                        kill = True
                         break
             except:
                 pass
@@ -289,7 +290,8 @@ class StreamHandler():
         if progress and written > 0:
             sys.stderr.write("\n")
 
-        self.logger.info("Closing stream")
+        if kill == True:
+            self.logger.info("Closing stream")
         fd.close()
 
         if out != sys.stdout:
