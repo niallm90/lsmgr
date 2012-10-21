@@ -1,6 +1,5 @@
 from .compat import urllib, is_win32
 
-from livestreamer.compat import urllib
 import hmac, hashlib, zlib, argparse, socket, getpass, os
 
 SWF_KEY = b"Genuine Adobe Flash Player 001"
