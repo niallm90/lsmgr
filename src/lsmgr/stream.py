@@ -261,12 +261,9 @@ class StreamHandler():
         kill = False
 
         while True:
-            try:
-                if self.queueGet(False, 0) == "kill":
-                        kill = True
-                        break
-            except:
-                pass
+            if self.queueGet(False, 0) == "kill":
+                kill = True
+                break
             try:
                 data = fd.read(8192)
             except:
@@ -332,7 +329,7 @@ class StreamHandler():
                 self.logger.debug("Reading from the queue returned " + output)
                 return output
         except:
-            raise
+            return None
 
 
 class StreamThread():
