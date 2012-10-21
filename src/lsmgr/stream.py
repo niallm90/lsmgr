@@ -168,7 +168,7 @@ class StreamHandler():
                         else:
                             exit("Stream does not use a command-line")
                     else:
-                        while self.queueGet(False, 0) == "kill":
+                        while self.queueGet(False, 0) != "kill":
                             self.output_stream(stream)
                 else:
                     self.logger.error(("Invalid stream quality: {0}").format(args.stream))
